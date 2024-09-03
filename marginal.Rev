@@ -1,0 +1,37 @@
+neo <- readDiscreteCharacterData("project692.neo.nex")
+trans <- readDiscreteCharacterData("project692.trans.nex")
+source("by_ki.Rev")
+
+
+ppFile = "692_by_ki.pp"
+power_p = powerPosterior(mymodel, monitors, moves, ppFile, cats = 25)
+print("  - Created powerPosterior object")
+
+
+power_p.burnin(generations = 10000, tuningInterval = 1000)
+print("  - Commencing powerPosterior run")
+power_p.run(generations = 1000)
+
+
+ss = steppingStoneSampler(
+  file = ppFile,
+  powerColumnName = "power",
+  likelihoodColumnName = "likelihood"
+)
+write(ss.marginal(), file = "692_by_ki.out.pp")
+print("  Stepping stone marginal likelihood:")
+ss.marginal()
+
+
+ps = pathSampler(
+  file = ppFile,
+  powerColumnName = "power",
+  likelihoodColumnName = "likelihood"
+)
+write(ss.marginal(), ps.marginal(), file = "692_by_ki.out.pp")
+print("  Path sampler marginal likelihood:")
+ps.marginal()
+
+
+print("  # # # RUN COMPLETE # # #  ")
+q()
