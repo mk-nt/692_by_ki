@@ -32,7 +32,7 @@ if (fileExists("692_by_ki_run_1_chain_0.ckp")) {
 
 stopping_rules[1] = srMaxTime(71, "hours")
 # Overshoot ESS slightly as calculations may differ
-stopping_rules[2] = srMinESS(333, paramFile, checkFreq)
+stopping_rules[2] = srMinESS(625, paramFile, checkFreq)
 # PSRF stopping rule seems never to trigger in rb1.2.4. Omit.
 # stopping_rules[3] = srGelmanRubin(1.01, paramFile, checkFreq)
 
